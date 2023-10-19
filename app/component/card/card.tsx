@@ -1,4 +1,3 @@
-"use client";
 import styles from "@/app/styles/Card.module.scss";
 
 export default function Card({
@@ -19,7 +18,7 @@ export default function Card({
         >
           <div className={`${styles.cardFace} ${styles.front}`}>Front</div>
           <div className={`${styles.cardFace} ${styles.back}`}>
-            <p>{word}</p>
+            <p>{word} </p>
           </div>
         </div>
       </div>
