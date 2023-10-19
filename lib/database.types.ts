@@ -11,49 +11,62 @@ export interface Database {
     Tables: {
       ideas: {
         Row: {
-          content: string | null
           created_at: string
+          description: string | null
           id: string
           is_visible: boolean
+          profile_id: string | null
           round: number | null
           title: string
         }
         Insert: {
-          content?: string | null
           created_at?: string
+          description?: string | null
           id?: string
           is_visible?: boolean
+          profile_id?: string | null
           round?: number | null
           title: string
         }
         Update: {
-          content?: string | null
           created_at?: string
+          description?: string | null
           id?: string
           is_visible?: boolean
+          profile_id?: string | null
           round?: number | null
           title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "ideas_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           email: string
           id: string
-          nick_name: string | null
+          name: string | null
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           email: string
           id: string
-          nick_name?: string | null
+          name?: string | null
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           email?: string
           id?: string
-          nick_name?: string | null
+          name?: string | null
         }
         Relationships: [
           {
@@ -66,17 +79,14 @@ export interface Database {
       }
       words: {
         Row: {
-          content: string
           created_at: string
           id: string
         }
         Insert: {
-          content: string
           created_at?: string
-          id?: string
+          id: string
         }
         Update: {
-          content?: string
           created_at?: string
           id?: string
         }
@@ -121,7 +131,23 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      idea_function_test: {
+        Args: {
+          idea_title: string
+          idea_description: string
+        }
+        Returns: undefined
+      }
+      insert_word_idea_after_insert_idea: {
+        Args: {
+          idea_title: string
+          idea_description: string
+          idea_is_visible: boolean
+          words: string[]
+          profile_id?: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
