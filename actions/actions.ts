@@ -2,12 +2,25 @@
 
 import {
   Session,
-  createClientComponentClient,
   createServerComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-const supabase = createServerComponentClient<Database>({ cookies });
+const getDB = () => {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore,
+  });
+  return supabase;
+};
+
+const getSession = async () => {
+  const supabase = getDB();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  return session;
+};
 
 /**
  * 여기서 종합적으로 해줌. 각각 아이디어만 저장하는 함수. postgres function으로 transaction처럼 수행.
@@ -18,10 +31,14 @@ const supabase = createServerComponentClient<Database>({ cookies });
 export const insertWordAndIdea = async (
   idea: { title: string; description: string; isVisible: boolean },
   intersection: string[]
+  // session: Session | null
 ) => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // const cookieStore = cookies();
+  // const supabase = createServerComponentClient<Database>({
+  //   cookies: () => cookieStore,
+  // });
+  const supabase = getDB();
+  const session = await getSession();
   // idea 저장
   const data = await supabase.rpc("insert_word_idea_after_insert_idea", {
     idea_title: idea.title,
@@ -51,6 +68,8 @@ const insertIdea = async ({
   session: Session | null;
 }) => {
   try {
+    const supabase = getDB();
+    const session = await getSession();
     const insertResult = await supabase.from("ideas").insert({
       title: title,
       description: description,
@@ -79,6 +98,12 @@ export const selectWordsIdea = async ({
   orderby: "created_at";
   ascDsc: "ASC" | "DSC";
 }) => {
+  // const cookieStore = cookies();
+  // const supabase = createServerComponentClient<Database>({
+  //   cookies: () => cookieStore,
+  // });
+  const supabase = getDB();
+  // const session = await getSession();
   const { data, error } = await supabase
     .from("ideas")
     .select("id, title,description, words_ideas(words_id), profiles(name)")

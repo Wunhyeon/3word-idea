@@ -44,6 +44,7 @@ export default function IdeaInput({
           isVisible: isVisible,
         },
         intersection
+        // session
       );
       if (insertResult.error !== null) {
         alert("error");
