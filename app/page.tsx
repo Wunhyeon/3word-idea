@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import Card from "./card/page";
 import List from "./list/page";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
