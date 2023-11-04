@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NavbarContainer />
-        <main className="sm:px-16 px-8 sm:py-24 py-12">{children}</main>
+        <main className="sm:px-16 px-8  py-12 h-screen">{children}</main>
       </body>
     </html>
   );

@@ -2,6 +2,7 @@ import { createBrowserClient, createServerClient } from "@supabase/ssr";
 import AuthStatus from "./Auth-status";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import Link from "next/link";
 
 export default async function NavbarContainer() {
   const cookieStore = cookies();
@@ -27,7 +28,9 @@ export default async function NavbarContainer() {
 
     <header>
       <nav className="border-2 border-red-500 max-container px-8 sm:px-16 flex justify-between items-center">
-        <div>Logo</div>
+        <div>
+          <Link href="/">Logo</Link>
+        </div>
         <AuthStatus user={user} />
       </nav>
     </header>

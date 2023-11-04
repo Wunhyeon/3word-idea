@@ -1,12 +1,15 @@
+"use client";
 // login 했나 안했나 구분해서 다른 컴포넌트 보여줌. 이 컴포넌트는 구별하는 역할
 import { createClient } from "@/utils/supabase/server";
 import { Session, User } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-export default async function AuthStatus({ user }: { user: User | null }) {
+import Link from "next/link";
+export default function AuthStatus({ user }: { user: User | null }) {
   return (
     <div>
       {user ? (
-        <div>
+        <div className="flex gap-3">
+          <Link href="/mypage">My Page</Link>
           <form className="" action="/auth/sign-out" method="post">
             <button>로그아웃</button>
           </form>
