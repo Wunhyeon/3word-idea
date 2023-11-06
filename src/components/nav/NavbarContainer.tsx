@@ -31,7 +31,10 @@ export default async function NavbarContainer() {
         <div>
           <Link href="/">Logo</Link>
         </div>
-        <AuthStatus user={user} />
+        <div>
+          <Link href="/audiopage">Audio Page</Link>
+          <AuthStatus user={user} />
+        </div>
       </nav>
     </header>
   );

@@ -2,8 +2,15 @@
 // login 했나 안했나 구분해서 다른 컴포넌트 보여줌. 이 컴포넌트는 구별하는 역할
 import { createClient } from "@/utils/supabase/server";
 import { Session, User } from "@supabase/supabase-js";
+import dynamic from "next/dynamic";
+// import Crunker from "crunker";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { ChangeEventHandler } from "react";
+const InputAudio = dynamic(() => import("../inputAudio"), {
+  ssr: false,
+});
+
 export default function AuthStatus({ user }: { user: User | null }) {
   return (
     <div>

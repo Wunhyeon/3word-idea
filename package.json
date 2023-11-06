@@ -11,8 +11,10 @@
   "dependencies": {
     "@supabase/ssr": "^0.0.5",
     "@supabase/supabase-js": "^2.38.4",
+    "crunker": "^2.2.0",
     "next": "14.0.1",
     "react": "^18",
+    "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18",
     "sass": "^1.69.5"
   },
