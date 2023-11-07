@@ -13,6 +13,21 @@ export default function AudioPageClient() {
   const [recordAudioBuffer, setRecordAudioBuffer] = useState<AudioBuffer>();
 
   return (
+    // <div>
+    //   <InputAudio setInputAudioBuffer={setInputAudioBuffer} />
+    //   <Recorder setRecordAudioBuffer={setRecordAudioBuffer} />
+    //   {inputAudioBuffer && recordAudioBuffer ? (
+    //     <div>
+    //       <ConcatAudio
+    //         inputAudioBuffer={inputAudioBuffer}
+    //         recordAudioBuffer={recordAudioBuffer}
+    //       />
+    //     </div>
+    //   ) : (
+    //     <div>아직없음</div>
+    //   )}
+    // </div>
+
     <div>
       <InputAudio setInputAudioBuffer={setInputAudioBuffer} />
       <Recorder setRecordAudioBuffer={setRecordAudioBuffer} />

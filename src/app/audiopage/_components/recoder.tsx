@@ -50,6 +50,20 @@ export default function Recorder({
     }
   };
 
+  const recordPause = () => {
+    if (mediaRecorder) {
+      mediaRecorder.pause();
+      console.log(mediaRecorder.state);
+    }
+  };
+
+  const recordOnPause = () => {
+    if (mediaRecorder) {
+      mediaRecorder.resume();
+      console.log(mediaRecorder.state);
+    }
+  };
+
   const recordStop = async () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
@@ -82,12 +96,9 @@ export default function Recorder({
       >
         Record
       </button>
-      <button
-        // className={`${recordingState === }`}
-        onClick={recordStop}
-      >
-        Stop
-      </button>
+      <button onClick={recordPause}>Pause</button>
+      <button onClick={recordOnPause}>on Pause</button>
+      <button onClick={recordStop}>Stop</button>
     </div>
   );
 }

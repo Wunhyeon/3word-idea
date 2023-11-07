@@ -1,3 +1,4 @@
+import AudioPlayer from "@/components/audioPlayer/audioPlayer";
 import Crunker from "crunker";
 import { useState } from "react";
 
@@ -8,9 +9,9 @@ export default function InputAudio({
 }: {
   setInputAudioBuffer: (buffer: AudioBuffer) => void;
 }) {
-  const [recordedAudioBuffer, setRecordedAudioBuffer] =
-    useState<AudioBuffer[]>();
   const [newAudioBuffer, setNewAudioBuffer] = useState<AudioBuffer[]>();
+  const [audioSrc, setAudioSrc] = useState<string>();
+  const [currentTime, setCurrentTime] = useState<number>(0);
 
   const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -26,32 +27,12 @@ export default function InputAudio({
       console.log("buffer : ", buffer);
 
       setInputAudioBuffer(buffer[0]);
-
-      setRecordedAudioBuffer(buffer);
+      const output = crunker.export(buffer[0]);
+      const audioURL = window.URL.createObjectURL(output.blob);
+      setAudioSrc(audioURL);
     } catch (err) {
       console.log("err : ", err);
     }
-  };
-
-  const concatAudio = async () => {
-    try {
-      let crunker = new Crunker();
-
-      // // const buffers = await crunker.fetchAudio(...target.files);
-      // const concatenation = crunker.concatAudio(buffers);
-      // const output = crunker.export(concatenation);
-      // const downloadFile = crunker.download(output.blob, "test");
-
-      // console.log("downloadFIle : ", downloadFile);
-    } catch (err) {
-      console.log("err : ", err);
-    }
-
-    // console.log("concatenation : ", concatenation);
-
-    // const output = crunker.export(concatenation,'test')
-    // concat(buffers);
-    // return buffers;
   };
 
   const cutAudio = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,10 +85,17 @@ export default function InputAudio({
     return newBuffer;
   }
 
+  const [progress, setProgress] = useState(0);
+
   return (
     <div>
       <input onChange={onFileInputChange} type="file" accept="audio/*" />
       {/* <input onChange={cutAudio} type="file" accept="audio/*" multiple /> */}
+      {audioSrc && (
+        <div>
+          <AudioPlayer audioSrc={audioSrc} />
+        </div>
+      )}
     </div>
   );
 }
