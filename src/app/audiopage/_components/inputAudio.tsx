@@ -1,13 +1,15 @@
-import AudioPlayer from "@/components/audioPlayer/audioPlayer";
 import Crunker from "crunker";
 import { useState } from "react";
+import AudioPlayerForCustom from "./audioPlayerForCustom";
 
 // export
 
 export default function InputAudio({
   setInputAudioBuffer,
+  setInputAudioURL,
 }: {
   setInputAudioBuffer: (buffer: AudioBuffer) => void;
+  setInputAudioURL: (audioURL: string) => void;
 }) {
   const [newAudioBuffer, setNewAudioBuffer] = useState<AudioBuffer[]>();
   const [audioSrc, setAudioSrc] = useState<string>();
@@ -24,12 +26,10 @@ export default function InputAudio({
       let crunker = new Crunker();
 
       const buffer = await crunker.fetchAudio(file);
-      console.log("buffer : ", buffer);
-
       setInputAudioBuffer(buffer[0]);
       const output = crunker.export(buffer[0]);
       const audioURL = window.URL.createObjectURL(output.blob);
-      setAudioSrc(audioURL);
+      setInputAudioURL(audioURL);
     } catch (err) {
       console.log("err : ", err);
     }
@@ -91,11 +91,6 @@ export default function InputAudio({
     <div>
       <input onChange={onFileInputChange} type="file" accept="audio/*" />
       {/* <input onChange={cutAudio} type="file" accept="audio/*" multiple /> */}
-      {audioSrc && (
-        <div>
-          <AudioPlayer audioSrc={audioSrc} />
-        </div>
-      )}
     </div>
   );
 }
