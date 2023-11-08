@@ -122,7 +122,7 @@ export default function AudioPlayerForCustom({
         className="flex items-center cursor-pointer hover:bg-pink-500"
         onClick={backThirty}
       >
-        back 30
+        ⬅ back 30
       </button>
       <button
         className="bg-pink-500
@@ -141,7 +141,7 @@ export default function AudioPlayerForCustom({
         className="flex items-center cursor-pointer hover:bg-pink-500"
         onClick={forwardThirty}
       >
-        forward 30
+        forward 30 ➡
       </button>
 
       {/* current time */}

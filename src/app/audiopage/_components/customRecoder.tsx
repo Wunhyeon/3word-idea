@@ -13,6 +13,8 @@ export default function CustomRecorder({
   const [chunks, setChunks] = useState<Blob[]>([]);
   const [audioContext, setAudioContext] = useState<AudioContext>();
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [isPause, setIsPause] = useState<boolean>(false);
+  const [isStarted, setIsStarted] = useState<boolean>(false); // 한번 시작하면 True로 바뀌고, 그 뒤에 값 안바뀜
 
   useEffect(() => {
     const initMediaRecorder = async () => {
@@ -46,6 +48,7 @@ export default function CustomRecorder({
       console.log(mediaRecorder.state);
       setIsRecording(true);
       setIsRecordingOutPage(true);
+      setIsStarted(true);
     }
   };
 
@@ -54,6 +57,7 @@ export default function CustomRecorder({
       mediaRecorder.pause();
       console.log(mediaRecorder.state);
       setIsRecording(false);
+      setIsPause(!isPause);
     }
   };
 
@@ -62,6 +66,7 @@ export default function CustomRecorder({
       mediaRecorder.resume();
       console.log(mediaRecorder.state);
       setIsRecording(true);
+      setIsPause(!isPause);
     }
   };
 
@@ -90,17 +95,51 @@ export default function CustomRecorder({
   };
 
   return (
-    <div>
-      <button
-        className={`${isRecording ? "bg-red-500" : ""}`}
-        onClick={recordStart}
-      >
-        욕 갈겨버려~ (Record)
-      </button>
-      {}
-      <button onClick={recordPause}>잠깐 쉬어</button>
-      <button onClick={recordOnPause}>on Pause</button>
-      <button onClick={recordStop}>Stop</button>
+    <div className="flex">
+      {!isStarted && (
+        <button
+          className={`${
+            isRecording ? "bg-red-500" : ""
+          } w-30 h-30 rounded-full bg-red-500`}
+          onClick={recordStart}
+        >
+          욕 갈겨버려~ (Record)
+        </button>
+      )}
+
+      {/* {isStarted && isPause ? (
+        <button onClick={recordOnPause}>다시 욕해</button>
+      ) : (
+        <button onClick={recordPause}>잠깐 쉬어</button>
+      )}
+
+      {isStarted && <button onClick={recordStop}>욕 다했어. 시원하다.</button>} */}
+
+      {isStarted && (
+        <div className="flex gap-5">
+          {isPause ? (
+            <button
+              className="w-30 h-30 rounded-full bg-red-300"
+              onClick={recordOnPause}
+            >
+              다시 욕해
+            </button>
+          ) : (
+            <button
+              className="w-30 h-30 rounded-full bg-red-300"
+              onClick={recordPause}
+            >
+              잠깐 쉬어
+            </button>
+          )}
+          <button
+            className="w-30 h-30 rounded-full bg-blue-500"
+            onClick={recordStop}
+          >
+            욕 다했어. 시원하다.
+          </button>
+        </div>
+      )}
     </div>
   );
 }

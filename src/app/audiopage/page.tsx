@@ -7,7 +7,7 @@ const AudioPageClient = dynamic(() => import("./_components/audioPageClient"), {
 
 export default async function AudioPage() {
   return (
-    <div>
+    <div className="max-container">
       <AudioPageClient />
     </div>
   );
