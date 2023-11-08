@@ -89,7 +89,7 @@ export default function InputAudio({
 
   return (
     <div>
-      <input onChange={onFileInputChange} type="file" accept="audio/*" />
+      <input onChange={onFileInputChange} type="file" accept=".m4a" />
       {/* <input onChange={cutAudio} type="file" accept="audio/*" multiple /> */}
     </div>
   );
